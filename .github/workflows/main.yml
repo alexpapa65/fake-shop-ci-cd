@@ -25,8 +25,8 @@ jobs: # sequência de etapas a serem executadas
           push: true
           file: ./src/Dockerfile
           tags: |
-            alexpapa/fake-shop-ci-cd:latest
-            alexpapa/fake-shop-ci-cd:v{{ github.run_number }}
+            papadopoli/fake-shop-ci-cd:latest
+            papadopoli/fake-shop-ci-cd:v{{ github.run_number }}
 
   cd: # job de cd
     runs-on: ubuntu-latest
