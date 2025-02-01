@@ -1,0 +1,26 @@
+name: CI-CD # nome do workflow
+
+on: # evento que irá disparar o workflow
+  push:
+    branches: ["main"] # dispara a qualquer push na main
+  workflow_dispatch: # permite execução manual do workflow
+jobs: # sequência de etapas a serem executadas
+  ci: # job de ci
+    runs-on: ubuntu-latest
+    steps: # passos a serem executados
+      - name: Autenticar no Docker Hub
+        run: echo "Executando o comando Docker Login"
+      - name: Construção da imagem Docker
+        run: echo "Executando o comando Docker Build"
+      - name: Envio da imagem Docker
+        run: echo "Executando o comando Docker Push"
+
+  cd: # job de cd
+    runs-on: ubuntu-latest
+    steps: # passos a serem executados
+      - name: Autenticar na AWS
+        run: echo "Executando o comando aws configure"
+      - name: Configurar o kubectl
+        run: echo "Executando o comando aws eks update-kubeconfig"
+      - name: Deploy os manifestos do kubernetes
+        run: echo "Executando o comando kubectl apply"
