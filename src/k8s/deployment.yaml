@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: fakeshop
-        image: papadopoli/fake-shop:v3
+        image: papadopoli/fake-shop-ci-cd
         ports:
         - containerPort: 5000
         env:

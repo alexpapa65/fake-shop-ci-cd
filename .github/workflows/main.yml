@@ -31,6 +31,12 @@ jobs: # sequência de etapas a serem executadas
   cd: # job de cd
     runs-on: ubuntu-latest
     needs: [ci]
+
+    permissions: # Exigido pela action "Azure Deploy to Kubernetes cluster"
+      id-token: write
+      contents: read
+      actions: read
+
     steps: # passos a serem executados
 
       - name: Obter o código do projeto
@@ -47,4 +53,9 @@ jobs: # sequência de etapas a serem executadas
         run: aws eks update-kubeconfig --name eks-aula
 
       - name: Deploy os manifestos do kubernetes
-        run: echo "Executando o comando kubectl apply"
+        uses: Azure/k8s-deploy@v5
+        with:
+          manifests: |
+              ./src/k8s/deployment.yaml
+          images: |
+              papadopoli/fake-shop-ci-cd:v${{ github.run_number }}
