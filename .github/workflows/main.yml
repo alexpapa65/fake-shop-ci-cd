@@ -26,7 +26,7 @@ jobs: # sequência de etapas a serem executadas
           file: ./src/Dockerfile
           tags: |
             papadopoli/fake-shop-ci-cd:latest
-            papadopoli/fake-shop-ci-cd:v{{ github.run_number }}
+            papadopoli/fake-shop-ci-cd:v${{ github.run_number }}
             |
 
   cd: # job de cd
