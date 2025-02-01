@@ -8,17 +8,25 @@ jobs: # sequência de etapas a serem executadas
   ci: # job de ci
     runs-on: ubuntu-latest
     steps: # passos a serem executados
+
       - name: Obter o código do projeto
         uses: actions/checkout@v4
+
       - name: Autenticar no Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Construção da imagem Docker
-        run: echo "Executando o comando Docker Build"
-      - name: Envio da imagem Docker
-        run: echo "Executando o comando Docker Push"
+
+      - name: Construção e envio da imagem Docker
+        uses: docker/build-push-action@v6
+        with:
+          context: ./src
+          push: true
+          file: ./src/Dockerfile
+          tags: |
+            alexpapa/fake-shop-ci-cd:latest
+            alexpapa/fake-shop-ci-cd:v{{ github.run_number }}
 
   cd: # job de cd
     runs-on: ubuntu-latest
